@@ -9,13 +9,16 @@ class Room:
         #environment variable setting
 
         self.state={
-            "temprature":2000,
+            "temperature":2000,
             "humidity":2000,
             "air_quality":2000,
             "illuminance":50
         }
 
         self.devices={}
+    def get_state(self):
+        return self.state
+
 
 class MatterDevices:
 
