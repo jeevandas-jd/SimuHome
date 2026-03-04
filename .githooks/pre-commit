@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+
+uv run python -m cli.sim_parity_guard --staged-only

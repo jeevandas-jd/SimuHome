@@ -1,0 +1,294 @@
+{
+  "templates": {
+    "air_conditioner": [
+      {
+        "id": "cooling_percent",
+        "requires": [ { "attribute": "1.OnOff.OnOff", "value": true, "value_type": "bool" } ],
+        "targets": [
+          { "attribute": "1.OnOff.OnOff", "value": true, "value_type": "bool", "description": "power on" },
+          { "attribute": "1.Thermostat.SystemMode", "value": 3, "value_type": "enum", "description": "cooling" },
+          { "attribute": "1.FanControl.PercentSetting", "sampling": { "type": "bins", "values": [30, 40, 50, 60, 70, 80], "exclude_current": true }, "value_type": "percent" }
+        ],
+        "prefer_change": true
+      }
+    ],
+    "dimmable_light": [
+      {
+        "id": "level_percent",
+        "requires": [ { "attribute": "1.OnOff.OnOff", "value": true, "value_type": "bool", "description": "power on" } ],
+        "targets": [
+          { "attribute": "1.OnOff.OnOff", "value": true, "value_type": "bool", "description": "power on" },
+          { "attribute": "1.LevelControl.CurrentLevel", "sampling": { "type": "range", "range": { "min": 10, "max": 100, "step": 10 }, "exclude_current": true }, "value_type": "percent" }
+        ],
+        "prefer_change": true
+      }
+    ],
+    "air_purifier": [
+      {
+        "id": "fan_percent",
+        "requires": [ { "attribute": "1.OnOff.OnOff", "value": true, "value_type": "bool", "description": "power on" } ],
+        "targets": [
+          { "attribute": "1.OnOff.OnOff", "value": true, "value_type": "bool", "description": "power on" },
+          { "attribute": "1.FanControl.PercentSetting", "sampling": { "type": "bins", "values": [30, 40, 50, 60, 70, 80], "exclude_current": true }, "value_type": "percent" }
+        ],
+        "prefer_change": true
+      }
+    ],
+    "dehumidifier": [
+      {
+        "id": "intensity_percent",
+        "requires": [ { "attribute": "1.OnOff.OnOff", "value": true, "value_type": "bool", "description": "power on" } ],
+        "targets": [
+          { "attribute": "1.OnOff.OnOff", "value": true, "value_type": "bool", "description": "power on" },
+          { "attribute": "1.FanControl.PercentSetting", "sampling": { "type": "bins", "values": [30, 40, 50, 60, 70, 80], "exclude_current": true }, "value_type": "percent" }
+        ],
+        "prefer_change": true
+      }
+    ],
+    "humidifier": [
+      {
+        "id": "mist_percent",
+        "requires": [ { "attribute": "1.OnOff.OnOff", "value": true, "value_type": "bool", "description": "power on" } ],
+        "targets": [
+          { "attribute": "1.OnOff.OnOff", "value": true, "value_type": "bool", "description": "power on" },
+          { "attribute": "1.FanControl.PercentSetting", "sampling": { "type": "bins", "values": [30, 40, 50, 60, 70, 80], "exclude_current": true }, "value_type": "percent" }
+        ],
+        "prefer_change": true
+      }
+    ],
+    "fan": [
+      {
+        "id": "fan_percent",
+        "requires": [ { "attribute": "1.OnOff.OnOff", "value": true, "value_type": "bool", "description": "power on" } ],
+        "targets": [
+          { "attribute": "1.OnOff.OnOff", "value": true, "value_type": "bool", "description": "power on" },
+          { "attribute": "1.FanControl.PercentSetting", "sampling": { "type": "bins", "values": [30, 40, 50, 60, 70, 80], "exclude_current": true }, "value_type": "percent" }
+        ],
+        "prefer_change": true
+      }
+    ],
+    "heat_pump": [
+      {
+        "id": "heat_mode",
+        "requires": [],
+        "targets": [ { "attribute": "4.Thermostat.SystemMode", "value": 4, "value_type": "enum", "description": "heating mode" } ]
+      },
+      {
+        "id": "heating_setpoint",
+        "requires": [ { "attribute": "4.Thermostat.SystemMode", "value": 4, "value_type": "enum", "description": "heating mode" } ],
+        "targets": [
+          { "attribute": "4.Thermostat.SystemMode", "value": 4, "value_type": "enum", "description": "heating mode" },
+          { "attribute": "4.Thermostat.OccupiedHeatingSetpoint", "sampling": { "type": "range", "range": { "min": 700, "max": 1975, "step": 25 }, "exclude_current": true }, "value_type": "temperature_c_centi" }
+        ],
+        "prefer_change": true
+      }
+    ],
+    "on_off_light": [
+      {
+        "id": "turn_on",
+        "requires": [],
+        "targets": [ { "attribute": "1.OnOff.OnOff", "value": true, "value_type": "bool", "description": "power on" } ],
+        "prefer_change": true
+      }
+    ],
+    "refrigerator": [
+      {
+        "id": "set_temperature",
+        "requires": [],
+        "targets": [ { "attribute": "1.TemperatureControl.TemperatureSetpoint", "sampling": { "type": "range", "range": { "min": 100, "max": 600, "step": 100 }, "exclude_current": true }, "value_type": "temperature_c_centi" } ],
+        "prefer_change": true
+      }
+    ],
+    "freezer": [
+      {
+        "id": "set_temperature",
+        "requires": [],
+        "targets": [ { "attribute": "1.TemperatureControl.TemperatureSetpoint", "sampling": { "type": "range", "range": { "min": -2300, "max": -1600, "step": 100 }, "exclude_current": true }, "value_type": "temperature_c_centi" } ],
+        "prefer_change": true
+      }
+    ],
+    "tv": [
+      {
+        "id": "media_play",
+        "requires": [ { "attribute": "1.OnOff.OnOff", "value": true, "value_type": "bool" } ],
+        "targets": [ { "attribute": "1.MediaPlayback.CurrentState", "value": 0, "value_type": "enum", "description": "playing" } ]
+      },
+      {
+        "id": "channel_by_identifier",
+        "requires": [ { "attribute": "1.OnOff.OnOff", "value": true, "value_type": "bool", "description": "power on" } ],
+        "targets": [
+          {
+            "attribute": "1.Channel.CurrentChannel.Identifier",
+            "sampling": { "type": "from_list", "source": "1.Channel.ChannelList", "pick_field": "Identifier", "exclude_path": "1.Channel.CurrentChannel.Identifier" },
+            "value_type": "identifier"
+          }
+        ],
+        "prefer_change": true
+      },
+      {
+        "id": "channel_by_number",
+        "requires": [ { "attribute": "1.OnOff.OnOff", "value": true, "value_type": "bool", "description": "power on" } ],
+        "targets": [
+          { "attribute": "1.Channel.CurrentChannel.MajorNumber", "sampling": { "type": "from_list", "source": "1.Channel.ChannelList", "pick_field": "MajorNumber", "exclude_path": "1.Channel.CurrentChannel.MajorNumber" }, "value_type": "integer" },
+          { "attribute": "1.Channel.CurrentChannel.MinorNumber", "sampling": { "type": "from_list", "source": "1.Channel.ChannelList", "pick_field": "MinorNumber" }, "value_type": "integer" }
+        ],
+        "prefer_change": true
+      },
+      {
+        "id": "volume_level",
+        "requires": [ { "attribute": "1.OnOff.OnOff", "value": true, "value_type": "bool", "description": "power on" } ],
+        "targets": [ { "attribute": "1.LevelControl.CurrentLevel", "sampling": { "type": "range", "range": { "min": 10, "max": 100, "step": 10 }, "exclude_current": true }, "value_type": "percent" } ],
+        "prefer_change": true
+      }
+    ],
+    "window_covering_controller": [
+      {
+        "id": "goto_percent",
+        "requires": [ { "attribute": "1.WindowCovering.SafetyStatus", "value": 0, "value_type": "enum", "description": "safe" } ],
+        "targets": [ { "attribute": "1.WindowCovering.TargetPositionLiftPercent100ths", "sampling": { "type": "range", "range": { "min": 0, "max": 10000, "step": 500 }, "exclude_current": true }, "value_type": "position_percent100ths" } ],
+        "prefer_change": true
+      },
+      {
+        "id": "open_fully",
+        "requires": [ { "attribute": "1.WindowCovering.SafetyStatus", "value": 0, "value_type": "enum", "description": "safe" } ],
+        "targets": [ { "attribute": "1.WindowCovering.TargetPositionLiftPercent100ths", "value": 0, "value_type": "position_percent100ths", "description": "fully open" } ]
+      },
+      {
+        "id": "close_fully",
+        "requires": [ { "attribute": "1.WindowCovering.SafetyStatus", "value": 0, "value_type": "enum", "description": "safe" } ],
+        "targets": [ { "attribute": "1.WindowCovering.TargetPositionLiftPercent100ths", "value": 10000, "value_type": "position_percent100ths", "description": "fully closed" } ]
+      }
+    ],
+    "dishwasher": [
+      {
+        "id": "start_cycle",
+        "requires": [ { "attribute": "1.OperationalState.OperationalState", "value": 0, "value_type": "enum", "description": "stopped" } ],
+        "targets": [ { "attribute": "1.OnOff.OnOff", "value": true, "value_type": "bool", "description": "power on" }, { "attribute": "1.OperationalState.OperationalState", "value": 1, "value_type": "enum", "description": "running" } ],
+        "prefer_change": true
+      },
+      {
+        "id": "pause_cycle",
+        "requires": [ { "attribute": "1.OperationalState.OperationalState", "value": 1, "value_type": "enum", "description": "running" } ],
+        "targets": [ { "attribute": "1.OperationalState.OperationalState", "value": 2, "value_type": "enum", "description": "paused" } ]
+      },
+      {
+        "id": "resume_cycle",
+        "requires": [ { "attribute": "1.OperationalState.OperationalState", "value": 2, "value_type": "enum", "description": "paused" } ],
+        "targets": [ { "attribute": "1.OperationalState.OperationalState", "value": 1, "value_type": "enum", "description": "running" } ]
+      },
+      {
+        "id": "stop_cycle",
+        "requires": [],
+        "targets": [ { "attribute": "1.OperationalState.OperationalState", "value": 0, "value_type": "enum", "description": "stopped" } ]
+      }
+    ],
+    "laundry_washer": [
+      {
+        "id": "start_cycle",
+        "requires": [ { "attribute": "1.OperationalState.OperationalState", "value": 0, "value_type": "enum", "description": "stopped" } ],
+        "targets": [ { "attribute": "1.OnOff.OnOff", "value": true, "value_type": "bool", "description": "power on" }, { "attribute": "1.OperationalState.OperationalState", "value": 1, "value_type": "enum", "description": "running" } ],
+        "prefer_change": true
+      },
+      {
+        "id": "pause_cycle",
+        "requires": [ { "attribute": "1.OperationalState.OperationalState", "value": 1, "value_type": "enum", "description": "running" } ],
+        "targets": [ { "attribute": "1.OperationalState.OperationalState", "value": 2, "value_type": "enum", "description": "paused" } ]
+      },
+      {
+        "id": "resume_cycle",
+        "requires": [ { "attribute": "1.OperationalState.OperationalState", "value": 2, "value_type": "enum", "description": "paused" } ],
+        "targets": [ { "attribute": "1.OperationalState.OperationalState", "value": 1, "value_type": "enum", "description": "running" } ]
+      },
+      {
+        "id": "stop_cycle",
+        "requires": [],
+        "targets": [ { "attribute": "1.OperationalState.OperationalState", "value": 0, "value_type": "enum", "description": "stopped" } ]
+      },
+      {
+        "id": "select_mode_and_start",
+        "requires": [ { "attribute": "1.OperationalState.OperationalState", "value": 0, "value_type": "enum", "description": "stopped" } ],
+        "targets": [
+          { "attribute": "1.OnOff.OnOff", "value": true, "value_type": "bool", "description": "power on" },
+          {
+            "attribute": "1.LaundryWasherMode.CurrentMode",
+            "sampling": {
+              "type": "from_list",
+              "source": "1.LaundryWasherMode.SupportedModes",
+              "pick_field": "mode",
+              "exclude_path": "1.LaundryWasherMode.CurrentMode"
+            },
+            "value_type": "enum"
+          },
+          { "attribute": "1.OperationalState.OperationalState", "value": 1, "value_type": "enum", "description": "running" }
+        ],
+        "prefer_change": true
+      }
+    ],
+    "laundry_dryer": [
+      {
+        "id": "start_cycle",
+        "requires": [ { "attribute": "1.OperationalState.OperationalState", "value": 0, "value_type": "enum", "description": "stopped" } ],
+        "targets": [ { "attribute": "1.OnOff.OnOff", "value": true, "value_type": "bool", "description": "power on" }, { "attribute": "1.OperationalState.OperationalState", "value": 1, "value_type": "enum", "description": "running" } ],
+        "prefer_change": true
+      },
+      {
+        "id": "pause_cycle",
+        "requires": [ { "attribute": "1.OperationalState.OperationalState", "value": 1, "value_type": "enum", "description": "running" } ],
+        "targets": [ { "attribute": "1.OperationalState.OperationalState", "value": 2, "value_type": "enum", "description": "paused" } ]
+      },
+      {
+        "id": "resume_cycle",
+        "requires": [ { "attribute": "1.OperationalState.OperationalState", "value": 2, "value_type": "enum", "description": "paused" } ],
+        "targets": [ { "attribute": "1.OperationalState.OperationalState", "value": 1, "value_type": "enum", "description": "running" } ]
+      },
+      {
+        "id": "stop_cycle",
+        "requires": [],
+        "targets": [ { "attribute": "1.OperationalState.OperationalState", "value": 0, "value_type": "enum", "description": "stopped" } ]
+      },
+      {
+        "id": "select_dryness_and_start",
+        "requires": [ { "attribute": "1.OperationalState.OperationalState", "value": 0, "value_type": "enum", "description": "stopped" } ],
+        "targets": [
+          { "attribute": "1.OnOff.OnOff", "value": true, "value_type": "bool", "description": "power on" },
+          {
+            "attribute": "1.LaundryDryerControls.SelectedDrynessLevel",
+            "sampling": {
+              "type": "from_list",
+              "source": "1.LaundryDryerControls.SupportedDrynessLevels",
+              "pick_field": "__self__",
+              "exclude_path": "1.LaundryDryerControls.SelectedDrynessLevel"
+            },
+            "value_type": "enum"
+          },
+          { "attribute": "1.OperationalState.OperationalState", "value": 1, "value_type": "enum", "description": "running" }
+        ],
+        "prefer_change": true
+      }
+    ],
+    "rvc": [
+      {
+        "id": "start_run",
+        "requires": [ { "attribute": "1.RVCOperationalState.OperationalState", "value": 0, "value_type": "enum", "description": "stopped" } ],
+        "targets": [ { "attribute": "1.RVCOperationalState.OperationalState", "value": 1, "value_type": "enum", "description": "running" } ],
+        "prefer_change": true
+      },
+      {
+        "id": "pause",
+        "requires": [ { "attribute": "1.RVCOperationalState.OperationalState", "value": 1, "value_type": "enum", "description": "running" } ],
+        "targets": [ { "attribute": "1.RVCOperationalState.OperationalState", "value": 2, "value_type": "enum", "description": "paused" } ]
+      },
+      {
+        "id": "resume",
+        "requires": [ { "attribute": "1.RVCOperationalState.OperationalState", "value": 2, "value_type": "enum", "description": "paused" } ],
+        "targets": [ { "attribute": "1.RVCOperationalState.OperationalState", "value": 1, "value_type": "enum", "description": "running" } ]
+      },
+      {
+        "id": "go_home",
+        "requires": [ { "attribute": "1.RVCOperationalState.OperationalState", "value": 1, "value_type": "enum", "description": "running" } ],
+        "targets": [ { "attribute": "1.RVCOperationalState.OperationalState", "value": 66, "value_type": "enum", "description": "docked" } ]
+      }
+    ]
+  }
+}
+

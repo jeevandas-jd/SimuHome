@@ -1,0 +1,42 @@
+schema: simuhome-eval-spec-v1
+
+run:
+  id: example_qt1_seed_1_3_5
+  output_root: experiments
+
+episode:
+  dir: data/benchmark
+  qt: qt1
+  case: feasible
+  seed: "1 - 3, 5"
+
+strategy:
+  name: react
+  timeout: 60
+  temperature: 0.0
+  max_steps: 20
+
+orchestration:
+  max_workers: 2
+  simulator_start_timeout: 30
+  simulator_start_retries: 1
+  evaluation_retries: 1
+  allow_partial_start: true
+
+api:
+  base: https://api.openai.com/v1
+  key: env:OPENAI_API_KEY
+
+judge:
+  model: gpt-5-mini
+  api_base: https://api.openai.com/v1
+  api_key: env:OPENAI_API_KEY
+
+models:
+  - model: openai/gpt-4.1
+    api_base: https://openrouter.ai/api/v1
+    api_key: env:OPENROUTER_API_KEY
+
+  - model: qwen3-30b-instruct
+    api_base: http://127.0.0.1:8000/v1
+    api_key: null
