@@ -1,0 +1,8 @@
+{
+  "total": 602,
+  "train": 481,
+  "val": 60,
+  "test": 61,
+  "random_seed": 42,
+  "model_format": "mistral-instruct"
+}
