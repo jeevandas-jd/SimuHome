@@ -21,11 +21,6 @@ OUTPUT_DIR       = DATA_DIR / "processed"
 
 # Optional string version if needed
 abs_path = os.path.abspath(TRAJECTORIES_DIR)
-# ── Config ───────────────────────────────────────────────────────
-abs_path="/home/jeevandas/WinningProjects/SimuHome/data/gold_trajectories"
-TRAJECTORIES_DIR = Path("/home/jeevandas/WinningProjects/SimuHome/data/gold_trajectories")
-EPISODES_DIR     = Path("/home/jeevandas/WinningProjects/SimuHome/data/benchmark")
-OUTPUT_DIR       = Path("/home/jeevandas/WinningProjects/SimuHome/data/processed")
 
 TRAIN_RATIO = 0.80   # 480 samples
 VAL_RATIO   = 0.10   #  60 samples
