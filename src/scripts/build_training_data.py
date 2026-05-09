@@ -1,4 +1,4 @@
-# /home/jd/SimuHome/src/scripts/build_training_data.py
+#SimuHome/src/scripts/build_training_data.py
 
 import json
 import jsonlines
@@ -6,6 +6,21 @@ import random
 from pathlib import Path
 from collections import defaultdict
 
+import os
+
+# Base project directory
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Data directory
+DATA_DIR = BASE_DIR / "data"
+
+# Paths
+TRAJECTORIES_DIR = DATA_DIR / "gold_trajectories"
+EPISODES_DIR     = DATA_DIR / "benchmark"
+OUTPUT_DIR       = DATA_DIR / "processed"
+
+# Optional string version if needed
+abs_path = os.path.abspath(TRAJECTORIES_DIR)
 # ── Config ───────────────────────────────────────────────────────
 abs_path="/home/jeevandas/WinningProjects/SimuHome/data/gold_trajectories"
 TRAJECTORIES_DIR = Path("/home/jeevandas/WinningProjects/SimuHome/data/gold_trajectories")
@@ -182,7 +197,7 @@ def main():
     print("\n=== Sample Check (first training example) ===")
     print(train[0]["text"][:500])
     print("...")
-    print(f"\n✅ Training data ready at: {OUTPUT_DIR}")
+    print(f"\n Training data ready at: {OUTPUT_DIR}")
 
 
 if __name__ == "__main__":

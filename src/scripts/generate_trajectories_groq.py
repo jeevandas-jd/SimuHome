@@ -9,11 +9,18 @@ from collections import defaultdict
 from groq import Groq
 
 # ── Config ───────────────────────────────────────────────────────
-EPISODES_DIR  = Path("/home/jd/SimuHome/data/benchmark")
-OUTPUT_DIR    = Path("/home/jd/SimuHome/data/gold_trajectories")
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Data folder
+DATA_DIR = BASE_DIR / "data"
+
+# Generalized paths
+EPISODES_DIR = DATA_DIR / "benchmark"
+OUTPUT_DIR   = DATA_DIR / "gold_trajectories"
+#CONFIG MODEL
 GROQ_API_KEY  = ""          # ← paste your key here
 MODEL         = "llama-3.1-8b-instant"
-DELAY_SECONDS = 4.0                # safe for 30 RPM free tier
+DELAY_SECONDS = 4.0         # safe for 30 RPM free tier
 
 client = Groq(api_key=GROQ_API_KEY)
 
@@ -161,7 +168,7 @@ def generate(episode: dict, max_retries: int = 3) -> str | None:
         except Exception as e:
             err = str(e)
             if "429" in err or "rate" in err.lower():
-                print(f"\n  ⚠️  Rate limit — waiting 30s...")
+                print(f"\n    Rate limit — waiting 30s...")
                 time.sleep(30)
             elif "503" in err or "502" in err:
                 print(f"\n  Server error — waiting 10s...")
@@ -182,11 +189,11 @@ def main():
             messages=[{"role": "user", "content": "say: ready"}],
             max_tokens=5
         )
-        print(f"✅ Groq connected — {MODEL}")
-        print(f"⏱  Delay : {DELAY_SECONDS}s between requests")
-        print(f"⏳ Est.   : ~{int(600 * DELAY_SECONDS / 60)} minutes total")
+        print(f" Groq connected — {MODEL}")
+        print(f"Delay : {DELAY_SECONDS}s between requests")
+        print(f"Est.   : ~{int(600 * DELAY_SECONDS / 60)} minutes total")
     except Exception as e:
-        print(f"❌ Groq connection failed: {e}")
+        print(f"Groq connection failed: {e}")
         return
 
     # ── Load all 600 episodes ─────────────────────────────────────
@@ -220,7 +227,7 @@ def main():
         total_success += len(done_seeds)
 
         if not remaining:
-            print(f"✅ {qt_key}: already complete ({len(done_seeds)})")
+            print(f"{qt_key}: already complete ({len(done_seeds)})")
             continue
 
         print(f"\n{'='*55}")
@@ -254,25 +261,25 @@ def main():
                         "qt":   qt_key,
                         "seed": ep["meta"]["seed"]
                     })
-                    print(f"\n  ❌ Failed: seed={ep['meta']['seed']}")
+                    print(f"\n  Failed: seed={ep['meta']['seed']}")
 
                 time.sleep(DELAY_SECONDS)
 
     # ── Final summary ─────────────────────────────────────────────
     print(f"\n{'='*55}")
-    print(f"✅ Success : {total_success} / 600")
-    print(f"❌ Failed  : {total_failed}")
-    print(f"📁 Saved   : {OUTPUT_DIR}")
+    print(f" Success : {total_success} / 600")
+    print(f" Failed  : {total_failed}")
+    print(f" Saved   : {OUTPUT_DIR}")
 
     if failed_list:
         with open(OUTPUT_DIR / "failed.json", "w") as f:
             json.dump(failed_list, f, indent=2)
-        print(f"⚠️  Failed list: {OUTPUT_DIR}/failed.json")
+        print(f"Failed list: {OUTPUT_DIR}/failed.json")
 
     print("\n=== Final Trajectory Counts ===")
     for f in sorted(OUTPUT_DIR.glob("*.jsonl")):
         count = sum(1 for _ in open(f))
-        mark  = "✅" if count >= 45 else "⚠️ "
+        mark  = "DONE" if count >= 45 else "ERROR"
         print(f"  {mark} {f.stem:<30}: {count}")
 
 if __name__ == "__main__":

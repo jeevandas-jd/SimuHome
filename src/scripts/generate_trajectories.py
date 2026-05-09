@@ -9,8 +9,14 @@ from tqdm import tqdm
 from collections import defaultdict
 
 # ── Config ───────────────────────────────────────────────────────
-EPISODES_DIR  = Path("/home/jd/SimuHome/data/benchmark")
-OUTPUT_DIR    = Path("/home/jd/SimuHome/data/gold_trajectories")
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Data folder
+DATA_DIR = BASE_DIR / "data"
+
+# Generalized paths
+EPISODES_DIR = DATA_DIR / "benchmark"
+OUTPUT_DIR   = DATA_DIR / "gold_trajectories"
 MODEL         = "llama3.2:3b"     # or "llama3.2:3b" or "qwen2.5:7b"
 DELAY_SECONDS = 0.1           # local = no rate limits, tiny delay
 
