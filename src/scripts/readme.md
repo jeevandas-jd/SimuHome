@@ -44,7 +44,34 @@ src/scripts/
 ```
 
 ---
+# Environment Variables
 
+Never hardcode API keys inside scripts.
+
+Export API keys from your terminal instead.
+
+## Groq API
+
+Temporary session:
+
+```bash
+export GROQ_API_KEY="your_api_key_here"
+```
+
+Permanent setup:
+
+```bash
+echo 'export GROQ_API_KEY="your_api_key_here"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+Verify:
+
+```bash
+echo $GROQ_API_KEY
+```
+
+---
 # Scripts
 
 ---
@@ -187,6 +214,95 @@ python src/scripts/build_training_data.py
 
 ---
 
+
+# Reusing the Pipeline With Different Models
+
+The pipeline is model-agnostic and can be reused with
+different teacher models for trajectory distillation.
+
+---
+
+## Local Models (Ollama)
+
+Inside:
+
+```python
+MODEL = "llama3.2:3b"
+```
+
+You can replace with:
+
+```python
+MODEL = "qwen2.5:7b"
+MODEL = "mistral:7b"
+MODEL = "llama3.1:8b"
+```
+
+Pull models using:
+
+```bash
+ollama pull llama3.1:8b
+ollama pull qwen2.5:7b
+```
+
+Run:
+
+```bash
+python src/scripts/generate_trajectories_ollama.py
+```
+
+---
+
+## Groq Models
+
+Inside:
+
+```python
+MODEL = "llama-3.1-8b-instant"
+```
+
+You can swap to any Groq-supported model.
+
+Example:
+
+```python
+MODEL = "llama-3.3-70b-versatile"
+MODEL = "mixtral-8x7b-32768"
+```
+
+Run:
+
+```bash
+python src/scripts/generate_trajectories_groq.py
+```
+
+---
+
+# Recommended Teacher Models
+
+| Model | Quality | Speed | Cost |
+|---|---|---|---|
+| llama3.2:3b | Low-Medium | Fast | Free |
+| qwen2.5:7b | Medium | Medium | Free |
+| llama3.1:8b | Good | Medium | Free |
+| llama3.3:70b | Very Good | Fast (API) | Paid/API |
+| GPT-4o-mini | Excellent | Fast | Paid |
+
+---
+
+# Important Research Insight
+
+Teacher model quality strongly affects distilled trajectories.
+
+Smaller models may:
+- hallucinate observations
+- skip tool calls
+- ignore required actions
+
+Larger models generally produce:
+- cleaner ReAct traces
+- more reliable tool usage
+- better downstream fine-tuning performance
 # Dataset Flow
 
 ## Step 1 — Raw Benchmark Episodes

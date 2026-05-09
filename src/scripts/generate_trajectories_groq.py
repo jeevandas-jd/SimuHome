@@ -7,7 +7,7 @@ from pathlib import Path
 from tqdm import tqdm
 from collections import defaultdict
 from groq import Groq
-
+import os
 # ── Config ───────────────────────────────────────────────────────
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -18,7 +18,12 @@ DATA_DIR = BASE_DIR / "data"
 EPISODES_DIR = DATA_DIR / "benchmark"
 OUTPUT_DIR   = DATA_DIR / "gold_trajectories"
 #CONFIG MODEL
-GROQ_API_KEY  = ""          # ← paste your key here
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+
+if not GROQ_API_KEY:
+    raise ValueError(
+        "GROQ_API_KEY environment variable not set"
+    )       # ← paste your key here
 MODEL         = "llama-3.1-8b-instant"
 DELAY_SECONDS = 4.0         # safe for 30 RPM free tier
 
